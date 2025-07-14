@@ -20,6 +20,11 @@ class PostResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getPluralLabel(): ?string
+    {
+        return 'پست';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
