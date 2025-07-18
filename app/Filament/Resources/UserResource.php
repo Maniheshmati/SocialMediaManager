@@ -30,18 +30,52 @@ class UserResource extends Resource
     }
 
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                //
-            ]);
+    {   return $form
+        ->schema([
+            Forms\Components\Grid::make(2)
+                ->schema([
+                    Forms\Components\TextInput::make('first_name')
+                        ->label('نام')
+                        ->required()
+                        ->maxLength(50)
+                        ->autofocus(),
+
+                    Forms\Components\TextInput::make('last_name')
+                        ->label('نام خانوادگی')
+                        ->required()
+                        ->maxLength(50),
+                ]),
+
+            Forms\Components\TextInput::make('email')
+                ->label('ایمیل')
+                ->email()
+                ->required()
+                ->unique(ignoreRecord: true),
+
+            Forms\Components\TextInput::make('password')
+                ->label('رمز عبور')
+                ->password()
+                ->required(fn (string $context) => $context === 'create')
+                ->minLength(6)
+                ->same('password_confirmation')
+                ->dehydrateStateUsing(fn ($state) => !empty($state) ? bcrypt($state) : null)
+                ->dehydrated(fn ($state) => filled($state)),
+
+            Forms\Components\TextInput::make('password_confirmation')
+                ->label('تکرار رمز عبور')
+                ->password()
+                ->required(fn (string $context) => $context === 'create'),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('full_name')
+                    ->label('نام')
+                    ->getStateUsing(fn ($record) => $record->first_name . ' ' . $record->last_name)
+                    ->searchable(['first_name', 'last_name']),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()
             ])
