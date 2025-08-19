@@ -7,7 +7,7 @@
     </div>
     <ul class="p-4 space-y-2">
         <li>
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('admin.dashboard') }}"
                class="flex items-center gap-3 p-3 rounded-xl transition hover:bg-gray-700 {{ request()->routeIs('dashboard') ? 'bg-gray-700' : '' }}">
                 <span class="text-xl">🏠</span>
                 <span class="font-medium">داشبورد</span>
