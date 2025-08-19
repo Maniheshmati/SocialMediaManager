@@ -4,7 +4,7 @@
 @extends('layouts.navigation')
 
 @section('content')
-    <div class="space-y-6">
+    <div class="space-y-6" id="users-page">
 
         {{-- Page Header --}}
         <div class="flex items-center justify-between">
@@ -16,7 +16,7 @@
 
         {{-- Search & Filters --}}
         <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl border shadow-sm">
-            <input type="text" placeholder="جستجو کاربر..."
+            <input type="text" placeholder="جستجو کاربر..." id="user-search" name="user-search"
                    class="w-full md:w-1/3 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition">
             <select class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition">
                 <option>همه نقش‌ها</option>
@@ -27,7 +27,7 @@
 
         {{-- Users Table --}}
         <div class="overflow-x-auto rounded-2xl border bg-white shadow-sm">
-            <table class="min-w-full text-sm text-right text-gray-600">
+            <table class="min-w-full text-sm text-right text-gray-600" id="users-table">
                 <thead class="bg-gray-100 text-gray-700">
                 <tr>
                     <th class="px-6 py-3 font-semibold">#</th>
@@ -95,18 +95,28 @@
              class="relative bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 transform scale-95 opacity-0 transition-all duration-300 rtl">
             <h2 class="text-2xl font-bold mb-4 text-right">ایجاد کاربر جدید</h2>
 
-            <form class="space-y-4">
+            <form class="space-y-4" method="post" action="{{ route('admin.users.create') }}">
+                @csrf
                 <div>
                     <label class="block text-right text-gray-700">نام</label>
-                    <input type="text" class="w-full border rounded-lg px-3 py-2 text-right" placeholder="نام کاربر">
+                    <input type="text" name="user_name" id="user_name_input" class="w-full border rounded-lg px-3 py-2 text-right" placeholder="نام کاربر">
                 </div>
                 <div>
                     <label class="block text-right text-gray-700">ایمیل</label>
-                    <input type="email" class="w-full border rounded-lg px-3 py-2 text-right" placeholder="ایمیل کاربر">
+                    <input type="email" name="email" id="email_input" class="w-full border rounded-lg px-3 py-2 text-right" placeholder="ایمیل کاربر">
                 </div>
                 <div>
                     <label class="block text-right text-gray-700">رمز عبور</label>
-                    <input type="password" class="w-full border rounded-lg px-3 py-2 text-right" placeholder="رمز عبور">
+                    <input type="password" name="password" id="password_input" class="w-full border rounded-lg px-3 py-2 text-right" placeholder="رمز عبور">
+                </div>
+                <div>
+                    <label class="block text-right text-gray-700">نقش</label>
+                    <select class="block w-full p-2.5 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" name="user_role">
+                        <option selected>یک گزینه را انتخاب کنید</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->name }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="flex justify-between mt-6">

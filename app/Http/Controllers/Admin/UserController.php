@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -14,15 +15,40 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.users', compact('users'));
+        $roles = Role::all();
+        return view('admin.users', compact('users', 'roles'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'user_name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'user_role' => 'required'
+        ]);
+
+        $user = User::create([
+            'name' => $validatedData['user_name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password'])
+        ]);
+
+        // save role
+        $user->assignRole($validatedData['user_role']);
+
+        // Response depending on request type
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'User created successfully',
+                'user' => $user
+            ], 201);
+        }
+
+        return redirect()->back()->with('success', 'User created successfully');
     }
 
     /**
