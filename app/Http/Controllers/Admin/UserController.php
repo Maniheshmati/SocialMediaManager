@@ -14,10 +14,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        // Use pagination instead of loading everything
+        $users = User::with('roles')->paginate(10); // eager load roles to avoid N+1 problem
         $roles = Role::all();
+
         return view('admin.users', compact('users', 'roles'));
     }
+
 
     /**
      * Show the form for creating a new resource.

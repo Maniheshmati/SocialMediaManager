@@ -26,61 +26,55 @@
         </div>
 
         {{-- Users Table --}}
-        <div class="overflow-x-auto rounded-2xl border bg-white shadow-sm">
-            <table class="min-w-full text-sm text-right text-gray-600" id="users-table">
-                <thead class="bg-gray-100 text-gray-700">
-                <tr>
-                    <th class="px-6 py-3 font-semibold">#</th>
-                    <th class="px-6 py-3 font-semibold">نام</th>
-                    <th class="px-6 py-3 font-semibold">ایمیل</th>
-                    <th class="px-6 py-3 font-semibold">نقش</th>
-                    <th class="px-6 py-3 font-semibold">ثبت‌نام</th>
-                    <th class="px-6 py-3 font-semibold">عملیات</th>
-                </tr>
-                </thead>
-                <tbody>
+        <x-admin.table id="users-table">
+            {{-- Table Headers --}}
+            <x-slot:headers>
+                <th class="px-6 py-3 font-semibold">#</th>
+                <th class="px-6 py-3 font-semibold">نام</th>
+                <th class="px-6 py-3 font-semibold">ایمیل</th>
+                <th class="px-6 py-3 font-semibold">نقش</th>
+                <th class="px-6 py-3 font-semibold">ثبت‌نام</th>
+                <th class="px-6 py-3 font-semibold">عملیات</th>
+            </x-slot:headers>
 
-                @foreach($users as $user)
-                    <tr>
-                        <th class="px-6 py-3 font-semibold">{{ $user->id }}</th>
-                        <th class="px-6 py-3 font-semibold">{{ $user->first_name . ' ' . $user->last_name }}</th>
-                        <th class="px-6 py-3 font-semibold">{{$user->email}}</th>
-                        <th class="px-6 py-3 font-semibold"><span
-                                class="rounded-full bg-blue-100 text-blue-600 px-3 py-1 text-xs"> ادمین</span></th>
-                        <th class="px-6 py-3 font-semibold">{{ \Carbon\Carbon::instance($user->created_at)->format('Y-m-d') }}</th>
-                        <td class="px-6 py-3 flex gap-2">
-                            <a href="#"
-                               class="px-3 py-1 text-xs rounded-lg bg-green-100 text-green-700 hover:bg-green-200">ویرایش</a>
-                            <a href="#" class="px-3 py-1 text-xs rounded-lg bg-red-100 text-red-700 hover:bg-red-200">حذف</a>
+            {{-- Table Body (slot) --}}
+            @foreach($users as $user)
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="px-6 py-3">{{ $user->id }}</td>
+                    <td class="px-6 py-3 font-medium">{{ $user->first_name . ' ' . $user->last_name }}</td>
+                    <td class="px-6 py-3">{{ $user->email }}</td>
+                    @if($user->hasRole('admin'))
+                        <td class="px-6 py-3">
+                            <span class="rounded-full bg-blue-100 text-blue-600 px-3 py-1 text-xs">ادمین</span>
                         </td>
-                    </tr>
-                @endforeach
-                {{-- Example Static Rows --}}
-                {{--                <tr class="border-b hover:bg-gray-50 transition">--}}
-                {{--                    <td class="px-6 py-3">1</td>--}}
-                {{--                    <td class="px-6 py-3 font-medium">مانی هاشمی</td>--}}
-                {{--                    <td class="px-6 py-3">mani@example.com</td>--}}
-                {{--                    <td class="px-6 py-3"><span class="rounded-full bg-blue-100 text-blue-600 px-3 py-1 text-xs">ادمین</span></td>--}}
-                {{--                    <td class="px-6 py-3">2025-08-10</td>--}}
-                {{--                    <td class="px-6 py-3 flex gap-2">--}}
-                {{--                        <a href="#" class="px-3 py-1 text-xs rounded-lg bg-green-100 text-green-700 hover:bg-green-200">ویرایش</a>--}}
-                {{--                        <a href="#" class="px-3 py-1 text-xs rounded-lg bg-red-100 text-red-700 hover:bg-red-200">حذف</a>--}}
-                {{--                    </td>--}}
-                {{--                </tr>--}}
-                </tbody>
-            </table>
-        </div>
+                    @elseif($user->hasRole('مدیر پیج'))
+                        <td class="px-6 py-3">
+                            <span class="rounded-full bg-blue-100 text-blue-600 px-3 py-1 text-xs">مدیر پیج</span>
+                        </td>
+                    @else
+                        <td class="px-6 py-3">
+                            <span class="rounded-full bg-yellow-100 text-yellow-600 px-3 py-1 text-xs">کاربر عادی</span>
+                        </td>
+                    @endif
 
-        {{-- Pagination --}}
-        <div class="flex justify-between items-center py-4">
-            <p class="text-sm text-gray-500">نمایش ۱ تا ۱۰ از ۵۰ کاربر</p>
-            <div class="flex gap-2">
-                <button class="px-3 py-1 rounded-lg border bg-white hover:bg-gray-100">قبلی</button>
-                <button class="px-3 py-1 rounded-lg border bg-blue-600 text-white">۱</button>
-                <button class="px-3 py-1 rounded-lg border bg-white hover:bg-gray-100">۲</button>
-                <button class="px-3 py-1 rounded-lg border bg-white hover:bg-gray-100">بعدی</button>
-            </div>
-        </div>
+                    <td class="px-6 py-3">{{ $user->created_at->format('Y-m-d') }}</td>
+                    <td class="px-6 py-3 flex gap-2">
+                        <a href="#"
+                           class="px-3 py-1 text-xs rounded-lg bg-green-100 text-green-700 hover:bg-green-200">ویرایش</a>
+                        <a href="#"
+                           class="px-3 py-1 text-xs rounded-lg bg-red-100 text-red-700 hover:bg-red-200">حذف</a>
+                    </td>
+                </tr>
+            @endforeach
+
+            {{-- Table Footer / Pagination --}}
+            <x-slot:footer>
+                <p class="text-sm text-gray-500">نمایش ۱ تا ۱۰ از {{ $users->total() }} کاربر</p>
+                <div>
+                    {{ $users->links() }} {{-- Laravel paginator --}}
+                </div>
+            </x-slot:footer>
+        </x-admin.table>
 
     </div>
 
