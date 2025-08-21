@@ -57,13 +57,13 @@
 
 
         {{-- Charts Placeholder --}}
-        <div class="rounded-2xl border bg-white p-6 shadow-sm">
+        <x-admin.card>
             <h2 class="text-lg font-semibold text-gray-700 mb-4">آمار ماهانه</h2>
             <div class="h-48 flex items-center justify-center text-gray-400">
                 📊 نمودار اینجا
             </div>
             {{-- Later: Use Chart.js or Laravel Charts package --}}
-        </div>
+        </x-admin.card>
 
     </div>
 @endsection
