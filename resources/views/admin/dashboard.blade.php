@@ -7,49 +7,36 @@
     <div class="space-y-6">
 
         {{-- Statistic Cards --}}
-        <div class="grid gap-6 md:grid-cols-3">
+        <div class="grid gap-5 md:grid-cols-6">
             {{-- Users --}}
-            <div class="rounded-2xl border bg-white p-6 shadow-sm hover:shadow-md transition">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-semibold text-gray-700">کاربران</h2>
-                    <span class="text-blue-500 text-2xl">👤</span>
-                </div>
-                <p class="mt-4 text-3xl font-bold text-gray-900">
-                    {{ \App\Models\User::count() }}
-                </p>
-                <p class="text-sm text-gray-500">تعداد کل کاربران</p>
-                {{-- Later: Replace with User::count() from database --}}
-            </div>
+            <x-admin.stat-card
+            title="کاربران"
+            :value="\App\Models\User::count()"
+            description="تعداد کل کاربران"
+            icon="👤"
+            icon-color="#3b82f6"
+            />
 
             {{-- Posts --}}
-            <div class="rounded-2xl border bg-white p-6 shadow-sm hover:shadow-md transition">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-semibold text-gray-700">پست‌ها</h2>
-                    <span class="text-green-500 text-2xl">📝</span>
-                </div>
-                <p class="mt-4 text-3xl font-bold text-gray-900">
-                    {{ \App\Models\Post::count() }}
-                </p>
-                <p class="text-sm text-gray-500">مجموع پست‌های ثبت‌شده</p>
-                {{-- Later: Replace with Post::count() from database --}}
-            </div>
+            <x-admin.stat-card
+            title="پست ها"
+            :value="\App\Models\Post::count()"
+            description="تعداد پست های ثبت شده"
+            icon="📝"
+            />
 
             {{-- System Status --}}
-            <div class="rounded-2xl border bg-white p-6 shadow-sm hover:shadow-md transition">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-semibold text-gray-700">وضعیت سیستم</h2>
-                    <span class="text-red-500 text-2xl">⚡</span>
-                </div>
-                <p class="mt-4 text-3xl font-bold text-gray-900">
-                    OK
-                </p>
-                <p class="text-sm text-gray-500">سرورها بدون مشکل فعال هستند</p>
-                {{-- Later: You can check health status from Laravel Health or custom logic --}}
-            </div>
+
+            <x-admin.stat-card
+                title="وضعیت سیستم"
+                :value="'OK'"
+                description="سرور ها بدون مشکل فعال هستند"
+                icon="⚡"
+            />
         </div>
 
-        {{-- Recent Activity --}}
-        <div class="rounded-2xl border bg-white p-6 shadow-sm">
+        {{-- Recent Activity (Custom Component)--}}
+        <x-admin.card>
             <h2 class="text-lg font-semibold text-gray-700 mb-4">فعالیت اخیر</h2>
             <ul class="space-y-3 text-sm text-gray-600">
                 <li class="flex justify-between">
@@ -66,7 +53,8 @@
                 </li>
             </ul>
             {{-- Later: Replace with DB queries -> latest users, posts, logs --}}
-        </div>
+        </x-admin.card>
+
 
         {{-- Charts Placeholder --}}
         <div class="rounded-2xl border bg-white p-6 shadow-sm">
