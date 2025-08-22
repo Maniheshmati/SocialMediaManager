@@ -103,14 +103,3 @@
 
 <p>برای فارسی سازی داخل فایل .env</p>
 <p>locale: 'fa' </p>
-
-<hr>
-For debug and using dd() for every page you have to create a mount() function and put your data in there.
-<br>
-
-```
-    public function mount(): void
-    {
-        dd('Page mounted', auth()->check(), auth()->user()?->toArray());
-    }
-```
