@@ -15,15 +15,22 @@
         </div>
 
         {{-- Search & Filters --}}
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl border shadow-sm">
-            <input type="text" placeholder="جستجو کاربر..." id="user-search" name="user-search"
-                   class="w-full md:w-1/3 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition">
-            <select class="rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition">
-                <option>همه نقش‌ها</option>
-                <option>ادمین</option>
-                <option>کاربر عادی</option>
-            </select>
-        </div>
+        <x-admin.table-header
+            searchPlaceholder="جستجو کاربر..."
+            searchId="user-search"
+            searchName="user-search"
+            filterId="role-filter"
+            filterName="role">
+
+
+
+            <option value="" selected>یک گزینه را انتخاب کنید</option>
+            @foreach($roles as $role)
+                <option value="{{ $role->name }}">{{ $role->name }}</option>
+            @endforeach
+           <option value="کاربر عادی">کاربر عادی</option>
+        </x-admin.table-header>
+
 
         {{-- Users Table --}}
         <x-admin.table id="users-table">
@@ -130,6 +137,7 @@
 @endsection
 
 <script>
+
     document.addEventListener("DOMContentLoaded", () => {
         const openBtn = document.getElementById("openModal");
         const closeBtn = document.getElementById("closeModal");
