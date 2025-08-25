@@ -30,6 +30,10 @@ Route::middleware(['auth','can:access-admin'])
             Route::get('/', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
             Route::post('/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
         });
+
+        Route::group(['prefix' => 'reports'], function (){
+            Route::get('/', [\App\Http\Controllers\SocialAccountController::class, 'index'])->name('reports.index');
+        });
     });
 
 require __DIR__.'/auth.php';

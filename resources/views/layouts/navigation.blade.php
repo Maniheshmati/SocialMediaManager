@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <a href="#"
+            <a href="{{ route('admin.reports.index') }}"
                class="flex items-center gap-3 p-3 rounded-xl transition hover:bg-gray-700">
                 <span class="text-xl">📊</span>
                 <span class="font-medium">گزارش‌ها</span>
