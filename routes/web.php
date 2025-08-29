@@ -19,21 +19,28 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['auth','can:access-admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-        Route::resource('posts', \App\Http\Controllers\Admin\PostController::class); // replace with your entities
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'namespace' => 'Admin',
 
-        Route::group(['prefix' => 'users'], function (){
-            Route::get('/', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
-            Route::post('/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
-        });
+], function () {
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('posts', \App\Http\Controllers\Admin\PostController::class); // replace with your entities
 
-        Route::group(['prefix' => 'reports'], function (){
-            Route::get('/', [\App\Http\Controllers\SocialAccountController::class, 'index'])->name('reports.index');
-        });
+    Route::group(['prefix' => 'users'], function (){
+        Route::get('/', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+        Route::post('/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
     });
+
+    Route::group(['prefix' => 'reports'], function (){
+        Route::get('/', [\App\Http\Controllers\SocialAccountController::class, 'index'])->name('reports.index');
+    });
+});
+//    ->prefix('admin')
+//    ->name('admin.')
+//    ->group(function () {
+//
+//    });
 
 require __DIR__.'/auth.php';
