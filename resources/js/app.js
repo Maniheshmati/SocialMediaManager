@@ -3,6 +3,7 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 
 import './admin/common/modal';
+import 'flowbite'
 
 window.Alpine = Alpine;
 

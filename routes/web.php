@@ -36,6 +36,10 @@ Route::group([
     Route::group(['prefix' => 'reports'], function (){
         Route::get('/', [\App\Http\Controllers\SocialAccountController::class, 'index'])->name('reports.index');
     });
+
+    Route::get('/test', function () {
+        return view('test');
+    });
 });
 //    ->prefix('admin')
 //    ->name('admin.')

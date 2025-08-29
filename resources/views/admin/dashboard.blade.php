@@ -4,64 +4,92 @@
 @extends('layouts.navigation')
 
 @section('content')
-    <div class="space-y-6">
+    <div class="p-4 sm:mr-64 space-y-6">
+        {{-- Your content goes here --}}
+        {{-- Top Section with Statistic Cards (Flowbite) --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {{-- Users Stat Card --}}
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center gap-3">
+                    {{-- You can use an SVG icon from Flowbite or keep your emoji --}}
+                    <span class="text-3xl">👤</span>
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">کاربران</h3>
+                </div>
+                <div class="text-xl font-bold text-gray-900 dark:text-white mt-2">
+                    {{ \App\Models\User::count() }}
+                </div>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">تعداد کل کاربران</p>
+            </div>
 
-        {{-- Statistic Cards --}}
-        <div class="grid gap-5 md:grid-cols-6">
-            {{-- Users --}}
-            <x-admin.stat-card
-            title="کاربران"
-            :value="\App\Models\User::count()"
-            description="تعداد کل کاربران"
-            icon="👤"
-            icon-color="#3b82f6"
-            />
+            {{-- Posts Stat Card --}}
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">📝</span>
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">پست ها</h3>
+                </div>
+                <div class="text-xl font-bold text-gray-900 dark:text-white mt-2">
+                    {{ \App\Models\Post::count() }}
+                </div>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">تعداد پست های ثبت شده</p>
+            </div>
 
-            {{-- Posts --}}
-            <x-admin.stat-card
-            title="پست ها"
-            :value="\App\Models\Post::count()"
-            description="تعداد پست های ثبت شده"
-            icon="📝"
-            />
-
-            {{-- System Status --}}
-
-            <x-admin.stat-card
-                title="وضعیت سیستم"
-                :value="'OK'"
-                description="سرور ها بدون مشکل فعال هستند"
-                icon="⚡"
-            />
+            {{-- System Status Card --}}
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">⚡</span>
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">وضعیت سیستم</h3>
+                </div>
+                <div class="text-xl font-bold text-green-500 mt-2">
+                    OK
+                </div>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">سرور ها بدون مشکل فعال هستند</p>
+            </div>
         </div>
 
-        <div class="grid gap-6 md:grid-cols-3">
-            {{-- فعالیت اخیر --}}
-            <x-admin.card class="md:col-span-1 self-center">
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">فعالیت اخیر</h2>
-                <ul class="space-y-3 text-sm text-gray-600">
-                    <li class="flex justify-between">
-                        <span>👤 کاربر جدید ثبت‌نام کرد</span>
-                        <span class="text-gray-400">5 دقیقه پیش</span>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            {{-- Recent Activity (Flowbite List Group) --}}
+            <div class="lg:col-span-1 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">فعالیت اخیر</h2>
+                <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+                    <li class="py-3 sm:py-4">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                👤 کاربر جدید ثبت‌نام کرد
+                            </p>
+                            <span class="text-xs text-gray-400 dark:text-gray-500">5 دقیقه پیش</span>
+                        </div>
                     </li>
-                    <li class="flex justify-between">
-                        <span>📝 پست جدید ایجاد شد</span>
-                        <span class="text-gray-400">30 دقیقه پیش</span>
+                    <li class="py-3 sm:py-4">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                📝 پست جدید ایجاد شد
+                            </p>
+                            <span class="text-xs text-gray-400 dark:text-gray-500">30 دقیقه پیش</span>
+                        </div>
                     </li>
-                    <li class="flex justify-between">
-                        <span>⚙️ بروزرسانی سیستم</span>
-                        <span class="text-gray-400">1 ساعت پیش</span>
+                    <li class="py-3 sm:py-4">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                ⚙️ بروزرسانی سیستم
+                            </p>
+                            <span class="text-xs text-gray-400 dark:text-gray-500">1 ساعت پیش</span>
+                        </div>
                     </li>
                 </ul>
-            </x-admin.card>
+            </div>
 
-            {{-- نمودار --}}
-            <x-admin.card class="md:col-span-2">
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">آمار ماهانه</h2>
-                <div class="h-48 flex items-center justify-center text-gray-400">
+            {{-- Monthly Chart (Flowbite Card) --}}
+            <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">آمار ماهانه</h2>
+                <div class="h-64 flex items-center justify-center text-gray-400">
+                    {{-- This is where your chart would be rendered. Flowbite is designed to work with
+                         charting libraries like ApexCharts. You would place the chart element here
+                         and initialize it with JavaScript. --}}
                     📊 نمودار اینجا
                 </div>
-            </x-admin.card>
+            </div>
         </div>
+
     </div>
 @endsection
