@@ -1,17 +1,16 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('layouts.admin')
 @section('title','Dashboard')
-@extends('layouts.navigation')
 
 @section('content')
-    <div class="p-4 sm:mr-64 space-y-6">
-        {{-- Your content goes here --}}
+    {{-- This div now has a top margin to push it down below the fixed nav --}}
+    <div class="p-4 sm:mr-64 space-y-6 mt-16">
+
         {{-- Top Section with Statistic Cards (Flowbite) --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {{-- Users Stat Card --}}
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                 <div class="flex items-center gap-3">
-                    {{-- You can use an SVG icon from Flowbite or keep your emoji --}}
                     <span class="text-3xl">👤</span>
                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">کاربران</h3>
                 </div>
@@ -83,9 +82,6 @@
             <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">آمار ماهانه</h2>
                 <div class="h-64 flex items-center justify-center text-gray-400">
-                    {{-- This is where your chart would be rendered. Flowbite is designed to work with
-                         charting libraries like ApexCharts. You would place the chart element here
-                         and initialize it with JavaScript. --}}
                     📊 نمودار اینجا
                 </div>
             </div>

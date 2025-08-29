@@ -7,7 +7,7 @@
     <title>@yield('title','Admin')</title>
 </head>
 <body class="min-h-screen bg-gray-900" dir="rtl">
-
+@extends('layouts.navigation')
 <main class="">@yield('content')</main>
 </body>
 </html>
