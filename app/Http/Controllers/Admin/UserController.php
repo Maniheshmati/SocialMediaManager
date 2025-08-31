@@ -12,11 +12,33 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $users = User::with('roles');
+
+        // apply filter if provided
+        if ($request->has('filter')) {
+            switch ($request->filter) {
+                case 'yesterday':
+                    $users->whereDate('created_at', now()->subDay());
+                    break;
+                case '7days':
+                    $users->where('created_at', '>=', now()->subDays(7));
+                    break;
+                case '30days':
+                    $users->where('created_at', '>=', now()->subDays(30));
+                    break;
+                case 'month':
+                    $users->where('created_at', '>=', now()->subMonth());
+                    break;
+                case 'year':
+                    $users->where('created_at', '>=', now()->subYear());
+                    break;
+            }
+        }
         // Use pagination instead of loading everything
-        $users = User::with('roles')->paginate(10); // eager load roles to avoid N+1 problem
-//        dd($users);
+        $users = $users->paginate(10);
+        //        dd($users);
         $roles = Role::all();
 
         return view('admin.users', compact('users', 'roles'));
