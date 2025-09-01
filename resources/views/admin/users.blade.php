@@ -64,33 +64,7 @@
             </div>
         </div>
         <div class="min-h-[550px]">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="p-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                        </div>
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        شناسه
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        نام کاربر
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        دسترسی
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        ایمیل
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        عملیات
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
+         <x-admin.table :headers="$headers">
                 @foreach($users as $user)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
@@ -99,9 +73,9 @@
                                 <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                             </div>
                         </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $user->id }}
-                        </th>
+                        </td>
                         <td class="px-6 py-4">
                             {{ $user->name }}
                         </td>
@@ -120,50 +94,11 @@
                         </td>
                     </tr>
                 @endforeach
-
-                </tbody>
-            </table>
+         </x-admin.table>
         </div>
-        <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-            <!-- Display the number of results -->
-            <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-        نمایش
-        <span class="font-semibold text-gray-900 dark:text-white">
-            {{ $users->firstItem() }}-{{ $users->lastItem() }}
-        </span>
-        از
-        <span class="font-semibold text-gray-900 dark:text-white">{{ $users->total() }}</span>
-    </span>
+       <x-admin.table-footer :model="$users">
 
-            <!-- Pagination controls -->
-            <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-12">
-                <!-- Previous Page Button -->
-                <li>
-                    <a href="{{ $users->previousPageUrl() }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                       @if($users->onFirstPage()) disabled @endif>
-                        قبل
-                    </a>
-                </li>
-
-                <!-- Page Number Links -->
-                @for($i = 1; $i <= $users->lastPage(); $i++)
-                    <li>
-                        <a href="{{ $users->url($i) }}" class="flex items-center justify-center px-3 h-8 leading-tight  border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white
-                @if ($users->currentPage() == $i) bg-blue-500 text-white @else text-gray-500 bg-white @endif">
-                            {{ $i }}
-                        </a>
-                    </li>
-                @endfor
-
-                <!-- Next Page Button -->
-                <li>
-                    <a href="{{ $users->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                       @if(!$users->hasMorePages()) disabled @endif>
-                        بعد
-                    </a>
-                </li>
-            </ul>
-        </nav>
+       </x-admin.table-footer>
     </div>
 
 @endsection

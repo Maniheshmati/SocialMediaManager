@@ -41,7 +41,9 @@ class UserController extends Controller
         //        dd($users);
         $roles = Role::all();
 
-        return view('admin.users', compact('users', 'roles'));
+        $headers = ['شناسه', 'نام', 'دسترسی', 'ایمیل', 'عملیات'];
+
+        return view('admin.users', compact('users', 'roles', 'headers'));
     }
 
 
