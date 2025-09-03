@@ -55,6 +55,16 @@ class UserController extends Controller
             });
         }
 
+        if($request->has('filterRole') && !empty($request->filterRole)){
+            $role = $request->filterRole;
+            if($role == 'No Role')
+                $users->whereDoesntHave('roles');
+
+            else
+                $users->whereHas('roles', function($query) use ($role){
+                    $query->where('name', $role);
+                });
+        }
         // apply filter if provided
         if ($request->has('filter')) {
             switch ($request->filter) {

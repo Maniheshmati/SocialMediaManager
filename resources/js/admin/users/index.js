@@ -4,14 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const tableBody = document.querySelector("#users-table-body");
     const filterSelect = document.querySelector("#filter-select"); // your <select> for filters
     const searchInput = document.querySelector("#table-search");
-
-    function loadUsers(filter = null, page = 1, search=null) {
+    const filterRole = document.querySelector("#filter-role");
+    function loadUsers(filter = null, page = 1, search=null, filterRole=null) {
         let url = `/admin/users/index?page=${page}`;
         if (filter) {
             url += `&filter=${filter}`;
         }
         if(search !== null) {
             url += `&search=${search}`;
+        }
+        if(filterRole !== null) {
+            url += `&filterRole=${filterRole}`;
         }
 
         axios.get(url)
@@ -68,5 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const filter = filterSelect ? filterSelect.value : null;
             loadUsers(filter, 1, searchInput.value);
         });
+    }
+
+    if(filterRole) {
+        filterRole.addEventListener("change", () => {
+            const filter = filterSelect ? filterSelect.value : null;
+            loadUsers(filter, 1, searchInput.value, filterRole.value);
+        })
     }
 });
