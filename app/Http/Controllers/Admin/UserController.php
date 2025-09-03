@@ -101,21 +101,24 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+        if($request->has('id'))
+            $id = $request->id;
+        else
+            $id = null;
         $validatedData = $request->validate([
-            'user_name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'user_role' => 'required'
+            'name' => 'required',
+            'email' => 'required|email',
+            'role' => 'required'
         ]);
 
-        $user = User::create([
-            'name' => $validatedData['user_name'],
+        $user = User::updateOrCreate(['id' => $id], [
+            'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password'])
         ]);
 
-        // save role
-        $user->assignRole($validatedData['user_role']);
+        if($validatedData['role'] != 'No Role'){
+            $user->assignRole($validatedData['role']);
+        }
 
         // Response depending on request type
         if ($request->expectsJson()) {

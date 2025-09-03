@@ -31,7 +31,7 @@ Route::group([
     Route::group(['prefix' => 'users'], function (){
         Route::get('/', [\App\Http\Controllers\Admin\UserController::class, 'view'])->name('users.view');
         Route::get('/index', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
-        Route::post('/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
+        Route::post('/createOrEdit', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
     });
 
     Route::group(['prefix' => 'reports'], function (){
