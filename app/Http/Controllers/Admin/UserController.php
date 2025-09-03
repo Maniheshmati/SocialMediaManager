@@ -12,7 +12,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function view(Request $request)
     {
         $users = User::with('roles');
 
@@ -44,6 +44,47 @@ class UserController extends Controller
         return view('admin.users', compact('users', 'roles'));
     }
 
+    public function index(Request $request){
+        $users = User::with('roles');
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $users->where(function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // apply filter if provided
+        if ($request->has('filter')) {
+            switch ($request->filter) {
+                case 'yesterday':
+                    $users->whereDate('created_at', now()->subDay());
+                    break;
+                case '7days':
+                    $users->where('created_at', '>=', now()->subDays(7));
+                    break;
+                case '30days':
+                    $users->where('created_at', '>=', now()->subDays(30));
+                    break;
+                case 'month':
+                    $users->where('created_at', '>=', now()->subMonth());
+                    break;
+                case 'year':
+                    $users->where('created_at', '>=', now()->subYear());
+                    break;
+            }
+        }
+        // Use pagination instead of loading everything
+        $users = $users->paginate(10);
+        //        dd($users);
+        $roles = Role::all();
+
+        return response()->json([
+            'users' => $users,
+            'roles' => $roles
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
