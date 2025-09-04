@@ -12,7 +12,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function view(Request $request)
     {
         $users = User::with('roles');
 
@@ -44,27 +44,81 @@ class UserController extends Controller
         return view('admin.users', compact('users', 'roles'));
     }
 
+    public function index(Request $request){
+        $users = User::with('roles');
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $users->where(function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        if($request->has('filterRole') && !empty($request->filterRole)){
+            $role = $request->filterRole;
+            if($role == 'No Role')
+                $users->whereDoesntHave('roles');
+
+            else
+                $users->whereHas('roles', function($query) use ($role){
+                    $query->where('name', $role);
+                });
+        }
+        // apply filter if provided
+        if ($request->has('filter')) {
+            switch ($request->filter) {
+                case 'yesterday':
+                    $users->whereDate('created_at', '>=', now()->subDay());
+                    break;
+                case '7days':
+                    $users->where('created_at', '>=', now()->subDays(7));
+                    break;
+                case '30days':
+                    $users->where('created_at', '>=', now()->subDays(30));
+                    break;
+                case 'month':
+                    $users->where('created_at', '>=', now()->subMonth());
+                    break;
+                case 'year':
+                    $users->where('created_at', '>=', now()->subYear());
+                    break;
+            }
+        }
+        // Use pagination instead of loading everything
+        $users = $users->paginate(10);
+        //        dd($users);
+        $roles = Role::all();
+
+        return response()->json([
+            'users' => $users,
+            'roles' => $roles
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
     {
+        if($request->has('id'))
+            $id = $request->id;
+        else
+            $id = null;
         $validatedData = $request->validate([
-            'user_name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'user_role' => 'required'
+            'name' => 'required',
+            'email' => 'required|email',
+            'role' => 'required'
         ]);
 
-        $user = User::create([
-            'name' => $validatedData['user_name'],
+        $user = User::updateOrCreate(['id' => $id], [
+            'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password'])
         ]);
 
-        // save role
-        $user->assignRole($validatedData['user_role']);
+        if($validatedData['role'] != 'No Role'){
+            $user->assignRole($validatedData['role']);
+        }
 
         // Response depending on request type
         if ($request->expectsJson()) {
@@ -112,8 +166,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(int $id)
     {
-        //
+        $user = User::find($id);
+
+        if (! $user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully'], 200);
     }
 }

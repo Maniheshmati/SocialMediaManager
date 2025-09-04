@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('first_name')->default('کاربر');
             $table->string('last_name')->default('جدید');
             $table->string('name')->nullable()->comment("it's something like Nickname");
-            $table->string('email')->unique();
+            $table->string('mobile', 11)->unique();
+            $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->text('description')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

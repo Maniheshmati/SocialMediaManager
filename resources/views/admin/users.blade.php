@@ -6,54 +6,29 @@
 @section('content')
 
     <div class="p-4 sm:mr-96 sm:ml-32 space-y-6 mt-16">
-
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-            <div>
-                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                    <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <x-lucide-clock />
-                    </svg>
-                    ۳۰ روز اخیر
-                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div id="dropdownRadio" class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                    <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
-                        <li>
-                            <div class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <input id="filter-radio-1" type="radio" value="yesterday" name="filter-radio">
-                                <label for="filter-radio-1">دیروز</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <input id="filter-radio-2" type="radio" value="7days" name="filter-radio" checked>
-                                <label for="filter-radio-2">۷ روز اخیر</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <input id="filter-radio-3" type="radio" value="30days" name="filter-radio">
-                                <label for="filter-radio-3">۳۰ روز اخیر</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <input id="filter-radio-4" type="radio" value="month" name="filter-radio">
-                                <label for="filter-radio-4">ماه اخیر</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <input id="filter-radio-5" type="radio" value="year" name="filter-radio">
-                                <label for="filter-radio-5">سال اخیر</label>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div class="relative inline-block">
+                <label for="filter-select" class="sr-only">فیلتر کاربران</label>
+                <select id="filter-select"
+                        class="block w-48 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400">
+                    <option value="" selected>همه کاربران</option>
+                    <option value="yesterday">از دیروز</option>
+                    <option value="7days">۷ روز اخیر</option>
+                    <option value="30days">۳۰ روز اخیر</option>
+                    <option value="month">ماه اخیر</option>
+                    <option value="year">سال اخیر</option>
+                </select>
+            </div>
+            <div class="relative inline-block">
+                <label for="filter-role" class="sr-only">فیلتر دسترسی</label>
+                <select id="filter-role"
+                        class="block w-48 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400">
+                    <option value="" selected>همه کاربران</option>
+                    <option value="admin">ادمین</option>
+                    <option value="مدیر پیج">مدیر پیج</option>
+                    <option value="No Role">کاربر عادی</option>
+                </select>
             </div>
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative">
@@ -90,36 +65,7 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody>
-                @foreach($users as $user)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $user->id }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ $user->name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            @if($user->getRoleNames()->isNotEmpty())
-                                {{ $user->roles[0]->name }}
-                            @else
-                                No Role
-                            @endif
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->email }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">ویرایش</a>
-                        </td>
-                    </tr>
-                @endforeach
+                <tbody id="users-table-body">
 
                 </tbody>
             </table>
@@ -166,6 +112,68 @@
         </nav>
     </div>
 
-@endsection
+        <!-- Main modal -->
+        <div id="crud-modal" dir="rtl" tabindex="-1" aria-hidden="true"
+             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200 dark:border-gray-600">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                            ویرایش کاربر
+                        </h3>
+                        <button type="button"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                data-modal-toggle="crud-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">بستن مودال</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="edit-user-form" class="p-4 md:p-5">
+                        <div class="grid gap-4 mb-4 grid-cols-2">
+                            <div class="col-span-2">
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">نام</label>
+                                <input type="text" name="name" id="name"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5
+                               dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                       placeholder="نام کاربر را وارد کنید" required>
+                            </div>
+                            <div class="col-span-2">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ایمیل</label>
+                                <input type="email" name="email" id="email"
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5
+                               dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                       placeholder="ایمیل کاربر" required>
+                            </div>
+                            <div class="col-span-2 sm:col-span-1">
+                                <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">نقش</label>
+                                <select id="role" name="role"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5
+                                dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                    <option value="">انتخاب نقش</option>
+                                    <option value="admin">مدیر</option>
+                                    <option value="مدیر پیج">مدیر پیج</option>
+                                    <option value="No Role">بدون نقش</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit"
+                                class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center
+                        dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            ذخیره تغییرات
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-<script src="{{ asset('js/admin/users/index.js') }}" />
+
+        @endsection
+
+@vite('resources/js/admin/users/index.js')
