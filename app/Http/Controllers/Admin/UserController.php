@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -107,13 +108,22 @@ class UserController extends Controller
             $id = null;
         $validatedData = $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
             'role' => 'required'
         ]);
 
+        if($request->has('email'))
+            $email = $request->email;
+        else
+            $email = null;
+        if($request->has('mobile'))
+            $mobile = $request->mobile;
+        else
+            $mobile = null;
         $user = User::updateOrCreate(['id' => $id], [
             'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
+            'email' => $email,
+            'mobile' => $mobile,
+            'password' => Hash::make($request->password),
         ]);
 
         if($validatedData['role'] != 'No Role'){

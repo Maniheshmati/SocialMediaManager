@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.querySelector("#table-search");
     const filterRole = document.querySelector("#filter-role");
     const editForm = document.querySelector("#edit-user-form");
+    const createForm = document.querySelector("#create-user-form");
 
     let usersData = []; // ذخیره کاربران برای دسترسی هنگام ویرایش
 
@@ -154,6 +155,35 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
+    // Create Form
+    createForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const payload = {
+            name: createForm.querySelector("#name").value,
+            mobile: createForm.querySelector("#mobile").value,
+            role: createForm.querySelector("#role").value,
+        };
+        axios.post(`/admin/users/createOrEdit`, payload)
+            .then(() => {
+                const modalEl = document.getElementById('create-user-modal');
+                const modal = new Modal(modalEl);
+                modal.hide();
+
+                // const successNotification = document.getElementById('success_notification');
+                // successNotification.hidden = false;
+                // setTimeout(() => {
+                //     successNotification.hidden = true;
+                // }, 4000);
+                notify('success', 'کاربر ساخته شد.')
+
+                loadUsers();
+            })
+            .catch(error => {
+                console.error(error);
+                alert("خطا در به‌روزرسانی کاربر!");
+            });
+    });
     // Initial load
     loadUsers();
 
