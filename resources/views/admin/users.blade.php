@@ -13,7 +13,7 @@
                 <select id="filter-select"
                         class="block w-48 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400">
                     <option value="" selected>همه کاربران</option>
-                    <option value="yesterday">دیروز</option>
+                    <option value="yesterday">از دیروز</option>
                     <option value="7days">۷ روز اخیر</option>
                     <option value="30days">۳۰ روز اخیر</option>
                     <option value="month">ماه اخیر</option>

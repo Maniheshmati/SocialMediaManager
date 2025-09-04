@@ -69,7 +69,7 @@ class UserController extends Controller
         if ($request->has('filter')) {
             switch ($request->filter) {
                 case 'yesterday':
-                    $users->whereDate('created_at', now()->subDay());
+                    $users->whereDate('created_at', '>=', now()->subDay());
                     break;
                 case '7days':
                     $users->where('created_at', '>=', now()->subDays(7));
