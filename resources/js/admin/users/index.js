@@ -6,25 +6,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterSelect = document.querySelector("#filter-select");
     const searchInput = document.querySelector("#table-search");
     const filterRole = document.querySelector("#filter-role");
+    const editForm = document.querySelector("#edit-user-form");
 
     let usersData = []; // ذخیره کاربران برای دسترسی هنگام ویرایش
 
-    function loadUsers(filter = null, page = 1, search = null, filterRole = null) {
+    /**
+     * Load users from server and render them
+     */
+    function loadUsers(filter = null, page = 1, search = null, filterRoleValue = null) {
         let url = `/admin/users/index?page=${page}`;
         if (filter) url += `&filter=${filter}`;
         if (search !== null) url += `&search=${search}`;
-        if (filterRole !== null) url += `&filterRole=${filterRole}`;
+        if (filterRoleValue !== null) url += `&filterRole=${filterRoleValue}`;
 
         axios.get(url)
             .then(response => {
-                usersData = response.data.users.data; // ذخیره برای ویرایش
+                usersData = response.data.users.data;
                 renderTable(usersData);
                 initFlowbite();
                 attachEditEvents();
+                attachDeleteEvents();
             })
             .catch(error => console.error(error));
     }
 
+    /**
+     * Render user table rows
+     */
     function renderTable(users) {
         tableBody.innerHTML = "";
         users.forEach(user => {
@@ -39,8 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     <td class="px-6 py-4">${user.name}</td>
                     <td class="px-6 py-4">${user.roles.length > 0 ? user.roles[0].name : 'No Role'}</td>
                     <td class="px-6 py-4">${user.email}</td>
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline edit-user-btn" data-user-id="${user.id}" data-modal-target="crud-modal" data-modal-toggle="crud-modal">ویرایش</a>
+                    <td class="px-6 py-4 flex gap-2">
+                        <a href="#"
+                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline edit-user-btn"
+                           data-user-id="${user.id}"
+                           data-modal-target="crud-modal"
+                           data-modal-toggle="crud-modal">ویرایش</a>
+                        <a href="#"
+                           class="font-medium text-red-600 dark:text-red-500 hover:underline delete-user-btn"
+                           data-user-id="${user.id}">حذف</a>
                     </td>
                 </tr>
             `;
@@ -48,6 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    /**
+     * Attach edit button events
+     */
     function attachEditEvents() {
         const editButtons = document.querySelectorAll(".edit-user-btn");
         editButtons.forEach(btn => {
@@ -58,24 +76,52 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!user) return;
 
                 // پر کردن فرم مودال
-                const form = document.querySelector("#edit-user-form");
-                form.dataset.userId = user.id; // ذخیره آیدی برای submit
-                form.querySelector("#name").value = user.name || '';
-                form.querySelector("#email").value = user.email || '';
-                form.querySelector("#role").value = user.roles.length > 0 ? user.roles[0].name : '';
+                editForm.dataset.userId = user.id;
+                editForm.querySelector("#name").value = user.name || '';
+                editForm.querySelector("#email").value = user.email || '';
+                editForm.querySelector("#role").value = user.roles.length > 0 ? user.roles[0].name : '';
 
                 // نمایش مودال
                 const modalEl = document.getElementById('crud-modal');
-                const modal = new window.Modal(modalEl);
+                const modal = new Modal(modalEl);
                 modal.show();
             });
         });
     }
 
-    // submit فرم
-    const editForm = document.querySelector("#edit-user-form");
+    /**
+     * Attach delete button events
+     */
+    function attachDeleteEvents() {
+        const deleteButtons = document.querySelectorAll(".delete-user-btn");
+        deleteButtons.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const userId = btn.dataset.userId;
+                deleteUser(userId);
+            });
+        });
+    }
 
+    /**
+     * Handle user deletion
+     */
+    function deleteUser(id) {
+        if (!confirm("آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟")) return;
 
+        axios.delete(`/admin/users/${id}`)
+            .then(() => {
+                loadUsers(); // reload table
+            })
+            .catch(error => {
+                console.error(error);
+                alert("خطا در حذف کاربر!");
+            });
+    }
+
+    /**
+     * Handle user edit form submit
+     */
     editForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const userId = editForm.dataset.userId;
@@ -88,19 +134,17 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         axios.post(`/admin/users/createOrEdit`, payload)
-            .then(response => {
-                // موفقیت: بستن مودال و رفرش جدول
+            .then(() => {
                 const modalEl = document.getElementById('crud-modal');
-                let modal = new Modal(modalEl);          // modal.hide();
+                const modal = new Modal(modalEl);
                 modal.hide();
 
                 const successNotification = document.getElementById('success_notification');
-                successNotification.hidden = false; // unhide it
-
-                // Optionally, hide it after 3-5 seconds
+                successNotification.hidden = false;
                 setTimeout(() => {
                     successNotification.hidden = true;
-                }, 4000);                // آپدیت جدول
+                }, 4000);
+
                 loadUsers();
             })
             .catch(error => {
@@ -112,13 +156,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial load
     loadUsers();
 
-    // Filter events
-    if(filterSelect) filterSelect.addEventListener("change", () => loadUsers(filterSelect.value));
-    if(searchInput) searchInput.addEventListener("input", () => {
+    // Filters
+    if (filterSelect) filterSelect.addEventListener("change", () => loadUsers(filterSelect.value));
+    if (searchInput) searchInput.addEventListener("input", () => {
         const filter = filterSelect ? filterSelect.value : null;
         loadUsers(filter, 1, searchInput.value);
     });
-    if(filterRole) filterRole.addEventListener("change", () => {
+    if (filterRole) filterRole.addEventListener("change", () => {
         const filter = filterSelect ? filterSelect.value : null;
         loadUsers(filter, 1, searchInput.value, filterRole.value);
     });
