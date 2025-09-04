@@ -103,3 +103,10 @@
 
 <p>برای فارسی سازی داخل فایل .env</p>
 <p>locale: 'fa' </p>
+
+
+<h1>Notifications</h1>
+<p>For notifications in js use this format:</p>
+```
+notify('success', 'message')
+```

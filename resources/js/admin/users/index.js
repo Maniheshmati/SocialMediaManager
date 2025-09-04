@@ -139,11 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const modal = new Modal(modalEl);
                 modal.hide();
 
-                const successNotification = document.getElementById('success_notification');
-                successNotification.hidden = false;
-                setTimeout(() => {
-                    successNotification.hidden = true;
-                }, 4000);
+                // const successNotification = document.getElementById('success_notification');
+                // successNotification.hidden = false;
+                // setTimeout(() => {
+                //     successNotification.hidden = true;
+                // }, 4000);
+                notify  ('success', 'کاربر ویرایش شد.')
 
                 loadUsers();
             })
