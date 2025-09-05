@@ -14,9 +14,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     // User profile
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // 🔒 Admin routes only for logged-in users
     Route::group([
@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
+            Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
         });
 
         Route::group(['prefix' => 'users'], function (){
