@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable()->comment("it's something like Nickname");
             $table->string('mobile', 11)->unique();
             $table->string('email')->nullable()->unique();
+            $table->string('profile_picture')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
