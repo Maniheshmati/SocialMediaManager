@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -32,24 +33,28 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $request->validate([
-            'mobile' => ['required', 'string', 'min:11', 'max:11', 'unique:users,mobile,', 'regex:/^09\d{9}$/'],
-        ]);
         $user = Auth::user();
-        $user->update($request->all());
-        return Redirect::route('admin.profile.show');
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->email = $request->email;
+        $user->save();
+
+        if($request->hasFile('profile_picture')) {
+            // Delete old file if exists
+            if ($user->profile_picture) {
+                $oldPath = str_replace('/storage/', '', $user->profile_picture);
+                Storage::disk('public')->delete($oldPath);
+            }
 
 
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
 
-//        $request->user()->fill($request->validated());
-//
-//        if ($request->user()->isDirty('email')) {
-//            $request->user()->email_verified_at = null;
-//        }
-//
-//        $request->user()->save();
-//
-//        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+            $user->profile_picture = Storage::url($path);
+            $user->save();
+        }
+        return back()->with('success', 'Profile updated successfully!');
     }
 
     /**
