@@ -13,7 +13,7 @@
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
                 </a>
             </div>
-            <div class="flex items-center">
+            <div class="flex ml-7 items-center">
                 <div class="flex items-center ms-3">
                     <div>
                         <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
@@ -21,13 +21,13 @@
                             <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_picture ?? 'https://static.vecteezy.com/system/resources/thumbnails/011/675/374/small_2x/man-avatar-image-for-profile-png.png' }}" alt="user photo">
                         </button>
                     </div>
-                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-                        <div class="px-4 py-3" role="none">
-                            <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                Neil Sims
+                    <div class="z-50 w-40 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+                        <div class="px-4 py-3 items-center" role="none">
+                            <p class="text-sm text-gray-900 dark:text-white items-center" role="none">
+                                {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
                             </p>
-                            <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                neil.sims@flowbite.com
+                            <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300 items-center" role="none">
+                                {{ Auth::user()->mobile }}
                             </p>
                         </div>
                         <ul class="py-1" role="none">
@@ -35,10 +35,7 @@
                                 <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">داشبورد</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
+                                <a href="{{ route('admin.profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">پروفایل</a>
                             </li>
                             <li>
                                 <a href=" {{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">خروج</a>
