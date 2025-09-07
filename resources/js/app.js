@@ -1,17 +1,13 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
-
 import './admin/common/modal';
-import 'flowbite'
+import 'flowbite';
 import axios from 'axios';
 import { showNotification } from "./helpers/notification.js";
 
-window.Alpine = Alpine;
 window.notify = showNotification;
 
-Alpine.start();
-
+// If you want lazy-load a page-specific JS
 if (document.getElementById('users-page')) {
     import('./admin/users/index');
 }
