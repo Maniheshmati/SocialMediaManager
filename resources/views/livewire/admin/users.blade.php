@@ -16,7 +16,7 @@
     <div class="relative inline-block">
         <label for="filter-select" class="sr-only">فیلتر کاربران</label>
         <select id="filter-select"
-                class="block w-48 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400">
+                class="block pr-10 w-48 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400">
             <option value="" selected>همه کاربران</option>
             <option value="yesterday">از دیروز</option>
             <option value="7days">۷ روز اخیر</option>
@@ -28,7 +28,7 @@
     <div class="relative inline-block">
         <label for="filter-role" class="sr-only">فیلتر دسترسی</label>
         <select id="filter-role"
-                class="block w-48 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400">
+                class="block pr-10 w-48 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-400">
             <option value="" selected>همه کاربران</option>
             <option value="admin">ادمین</option>
             <option value="مدیر پیج">مدیر پیج</option>
