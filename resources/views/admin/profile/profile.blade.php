@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="min-h-screen flex items-start justify-center  pt-20 px-4 sm:mr-64">
-        <div class="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-8">
+        <div class="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-8 dark:bg-gray-800">
             <!-- Title -->
             <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">ویرایش پروفایل</h2>
 
@@ -36,50 +36,50 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- First Name -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-600">نام</label>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-white">نام</label>
                         <input type="text" name="first_name" value="{{ old('first_name', $user->first_name) }}"
-                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-purple-200 px-4 py-2">
+                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-purple-200 px-4 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
 
                     <!-- Last Name -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-600">نام خانوادگی</label>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-white">نام خانوادگی</label>
                         <input type="text" name="last_name" value="{{ old('last_name', $user->last_name) }}"
-                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-purple-200 px-4 py-2">
+                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-purple-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 px-4 py-2">
                     </div>
                     </div>
 
                     <!-- NickName -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-600">نام کاربری</label>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-white">نام کاربری</label>
                         <input type="text" name="name" value="{{ old('name', $user->name) }}"
-                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-purple-200 px-4 py-2">
+                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-purple-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 px-4 py-2">
                     </div>
 
                     <!-- Email -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-600">Email</label>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-white">Email</label>
                         <input type="email" name="email" value="{{ old('email', $user->email) }}"
-                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 px-4 py-2">
+                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 px-4 py-2">
                     </div>
 
                     <!-- Number -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-600">موبایل</label>
+                        <label class="block text-sm font-medium text-gray-600 dark:text-white">موبایل</label>
                         <input type="text" name="mobile" value="{{ old('mobile', $user->mobile) }}"
-                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 px-4 py-2">
+                               class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 px-4 py-2">
                     </div>
                 </div>
 
                 <!-- Buttons -->
                 <div class="flex justify-between items-center pt-8">
-                    <a href="{{ route('dashboard') }}"
-                       class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">
-                        Back to Home
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg dark:bg-gray-700 dark:text-white hover:bg-gray-300 transition">
+                        برگشت به داشبورد
                     </a>
                     <button type="submit"
                             class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                        Save Changes
+                        ذخیره تغییرات
                     </button>
                 </div>
             </form>
