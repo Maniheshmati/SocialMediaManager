@@ -9,8 +9,9 @@
                     </svg>
                 </button>
                 <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+                    <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k4x2cmh0ez4v96fkv3fy2twf%2F1757617366_img_1.webp?st=2025-09-11T17%3A49%3A51Z&se=2025-09-17T18%3A49%3A51Z&sks=b&skt=2025-09-11T17%3A49%3A51Z&ske=2025-09-17T18%3A49%3A51Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=8ffff87a-01f1-47c9-9090-32999d4d6380&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=3da3LoTsWsZ7Q%2FJPY8CADAS1lPhL4JRnhMzkMGYJVjg%3D&az=oaivgprodscus"
+                         class="h-8 me-3" alt="FlowBite Logo" />
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">شاپی هاب</span>
                 </a>
             </div>
             <div class="flex ml-7 items-center">
