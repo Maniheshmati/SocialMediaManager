@@ -23,6 +23,7 @@ class TestUsersSeeder extends Seeder
                 'last_name'         => $faker->lastName,
                 'name'              => $faker->firstName . ' ' . $faker->lastName,
                 'email'             => $faker->unique()->safeEmail,
+                'mobile'            => $faker->unique()->numerify('###########'),
                 'email_verified_at' => Carbon::now(),
                 'password'          => Hash::make('password'), // all users have password = "password"
                 'remember_token'    => null,
